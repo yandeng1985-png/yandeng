@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>您的姓名 | 个人主页</title>
+  <meta name="description" content="一页式个人网站模板：简介、经历、项目与联系方式。适用于 GitHub Pages，零依赖、可直接上传 index.html。" />
+  <meta name="color-scheme" content="light dark" />
+  <meta property="og:title" content="您的姓名 | 个人主页" />
+  <meta property="og:description" content="一页式个人网站模板：简介、经历、项目与联系方式。" />
+  <meta property="og:type" content="website" />
+  <style>
+    :root {
+      --bg: #0b0c10;        /* 深背景 */
+      --panel: #12141a;     /* 卡片背景 */
+      --text: #e6e8ef;      /* 主要文字 */
+      --muted: #a9b0c0;     /* 次要文字 */
+      --brand: #5aa9e6;     /* 品牌色（可自定义） */
+      --accent: #7fc8a9;    /* 强调色（可自定义） */
+      --border: #222632;    /* 边框 */
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+      --maxw: 980px;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f7fb;
+        --panel: #ffffff;
+        --text: #1a1f2b;
+        --muted: #5a6376;
+        --border: #e8ecf2;
+        --shadow: 0 10px 24px rgba(0,0,0,.08);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, PingFang SC, Noto Sans CJK SC, Helvetica, Arial, "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(90,169,230,.18), transparent 50%),
+                  radial-gradient(1000px 700px at 110% 10%, rgba(127,200,169,.18), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+    }
+
+    a { color: var(--brand); text-decoration: none; }
+    a:hover, a:focus { text-decoration: underline; }
+
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 28px 20px 80px; }
+
+    /* 顶部导航 */
+    header {
+      position: sticky; top: 0; z-index: 20; backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      background: color-mix(in oklab, var(--bg) 80%, transparent);
+    }
+    .nav { max-width: var(--maxw); margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; gap: 16px; }
+    .brand { font-weight: 700; letter-spacing: .3px; }
+    .spacer { flex: 1; }
+    .nav a { color: var(--text); opacity: .9; padding: 6px 10px; border-radius: 8px; }
+    .nav a:hover { background: color-mix(in oklab, var(--panel) 70%, transparent); }
+
+    /* 英雄区 */
+    .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 28px; align-items: center; margin-top: 28px; }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .card.pad { padding: 24px; }
+
+    .title { font-size: clamp(28px, 3.6vw, 44px); line-height: 1.25; margin: 0 0 8px; }
+    .subtitle { color: var(--muted); margin: 0 0 18px; }
+
+    .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; border: 1px solid var(--border); background: color-mix(in oklab, var(--panel) 70%, transparent); color: var(--text); }
+    .btn.primary { background: linear-gradient(135deg, var(--brand), var(--accent)); color: #fff; border: none; }
+
+    .avatar {
+      aspect-ratio: 1/1; width: min(320px, 90%); border-radius: 50%; border: 8px solid color-mix(in oklab, var(--panel) 70%, transparent);
+      background: linear-gradient(180deg, rgba(90,169,230,.3), rgba(127,200,169,.3)),
+                  url('assets/profile.jpg') center/cover no-repeat;
+      margin: 0 auto;
+    }
+    .avatar-note { text-align: center; color: var(--muted); font-size: 13px; margin-top: 8px; }
+
+    /* 分区标题 */
+    h2.section { margin: 48px 0 14px; font-size: 22px; letter-spacing: .3px; }
+
+    /* 两列布局 */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+    /* 时间线样式（经历） */
+    .timeline { padding-left: 16px; }
+    .item { position: relative; padding-left: 18px; }
+    .item::before { content: ""; position: absolute; left: 0; top: .6em; width: 9px; height: 9px; background: var(--brand); border-radius: 99px; box-shadow: 0 0 0 2px color-mix(in oklab, var(--panel) 60%, transparent); }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px 14px; color: var(--muted); font-size: 14px; margin: 2px 0 6px; }
+    .role { font-weight: 600; }
+
+    /* 项目卡片 */
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .p { margin: 0 0 6px; }
+    .card .p + .p { margin-top: 6px; }
+
+    .project { padding: 18px; }
+    .project h3 { margin: 0 0 6px; font-size: 18px; }
+    .tag { display: inline-block; font-size: 12px; padding: 4px 8px; background: color-mix(in oklab, var(--panel) 70%, transparent); border: 1px solid var(--border); border-radius: 999px; color: var(--muted); margin-right: 6px; }
+
+    /* 联系区 */
+    .contact { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; align-items: center; }
+    .list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+    .list li { display: flex; align-items: center; gap: 10px; }
+
+    /* 页脚 */
+    footer { margin-top: 48px; color: var(--muted); font-size: 14px; text-align: center; }
+
+    /* 响应式 */
+    @media (max-width: 860px){
+      .hero { grid-template-columns: 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: 1fr 1fr; }
+      .contact { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 580px){
+      .cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="brand">您的姓名</div>
+      <div class="spacer"></div>
+      <a href="#about">简介</a>
+      <a href="#experience">经历</a>
+      <a href="#projects">项目</a>
+      <a href="#contact">联系</a>
+      <button class="btn" id="mode" aria-label="切换主题">🌓</button>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <!-- 英雄区 -->
+    <section class="hero">
+      <div class="card pad">
+        <h1 class="title">您好，我是 <span style="color:var(--brand)">您的姓名</span></h1>
+        <p class="subtitle">职业头衔｜关键词（例如：律师 / MBA / 产品策略）</p>
+        <p>一句话介绍：用 20–30 字概括您的专业优势与价值主张。例如：专注跨境合规与风险管理，擅长把复杂问题拆解为清晰、可执行的方案。</p>
+        <div class="btns">
+          <a class="btn primary" href="#contact">立即联系</a>
+          <a class="btn" href="assets/CV.pdf" target="_blank" rel="noopener">下载简历（PDF）</a>
+          <a class="btn" href="#projects">查看项目</a>
+        </div>
+      </div>
+      <aside>
+        <div class="card pad">
+          <div class="avatar" role="img" aria-label="个人头像，点击更换" title="将 assets/profile.jpg 替换为您的照片"></div>
+          <p class="avatar-note">将 <code>assets/profile.jpg</code> 替换为您的照片；无图片亦可正常显示。</p>
+        </div>
+      </aside>
+    </section>
+
+    <!-- 简介 + 亮点 -->
+    <section id="about" class="grid-2">
+      <article class="card pad">
+        <h2 class="section">关于我</h2>
+        <p>用 3–4 句介绍您是谁、做过什么、正在寻找什么机会。建议包含：年限、领域、代表性成果、核心技能与目标。
+        例如：拥有 10+ 年法务与公共服务经验，擅长合规审查、政策解读与跨部门协作；近期完成 MBA 学位，关注数据驱动的运营改善与社区影响。</p>
+      </article>
+      <aside class="card pad">
+        <h2 class="section">职业亮点</h2>
+        <ul class="list">
+          <li>✅ 代表性成果 A（量化结果，例如“缩短流程 35%”）</li>
+          <li>✅ 代表性成果 B（第三方认可，如“获奖/证书/媒体报道”）</li>
+          <li>✅ 关键技能 C（如“合同起草 / 风险评估 / 双语沟通”）</li>
+          <li>✅ 行业/领域（如“司法 / 社会服务 / 教育”）</li>
+        </ul>
+      </aside>
+    </section>
+
+    <!-- 经历 -->
+    <section id="experience" class="card pad">
+      <h2 class="section">工作经历</h2>
+      <div class="timeline" role="list">
+        <div class="item" role="listitem">
+          <div class="role">职位名称 · 机构名称</div>
+          <div class="meta"><span>起止时间（如 2018–2023）</span> · <span>地点</span></div>
+          <p class="p">一句话职责概述：负责什么、服务对象是谁、覆盖范围如何。</p>
+          <ul>
+            <li>成就 1：用数据呈现（例如 节省成本 X%，或服务 Y 人次）。</li>
+            <li>成就 2：提出并落地了什么方案，带来什么影响。</li>
+            <li>成就 3：协作与领导维度（跨团队、指导新人等）。</li>
+          </ul>
+        </div>
+        <hr style="border:0;border-top:1px solid var(--border);margin:16px 0;" />
+        <div class="item" role="listitem">
+          <div class="role">职位名称 · 机构名称</div>
+          <div class="meta"><span>起止时间</span> · <span>地点</span></div>
+          <p class="p">一句话职责概述。</p>
+          <ul>
+            <li>成就要点 A</li>
+            <li>成就要点 B</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 项目与作品 -->
+    <section id="projects" class="card pad">
+      <h2 class="section">项目与作品</h2>
+      <div class="cards">
+        <article class="card project">
+          <h3>项目名称 A</h3>
+          <p class="p">一句话说明项目目标与您的贡献。</p>
+          <p class="p"><span class="tag">合同自动化</span><span class="tag">政策评估</span><span class="tag">数据分析</span></p>
+          <p class="p"><a href="#" target="_blank" rel="noopener">项目链接</a></p>
+        </article>
+        <article class="card project">
+          <h3>项目名称 B</h3>
+          <p class="p">一句话说明项目目标与您的贡献。</p>
+          <p class="p"><span class="tag">流程优化</span><span class="tag">跨部门协作</span></p>
+          <p class="p"><a href="#" target="_blank" rel="noopener">项目链接</a></p>
+        </article>
+        <article class="card project">
+          <h3>项目名称 C</h3>
+          <p class="p">一句话说明项目目标与您的贡献。</p>
+          <p class="p"><span class="tag">合规</span><span class="tag">训练与宣讲</span></p>
+          <p class="p"><a href="#" target="_blank" rel="noopener">项目链接</a></p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 联系方式 -->
+    <section id="contact" class="card pad">
+      <h2 class="section">联系我</h2>
+      <div class="contact">
+        <div>
+          <p>乐意就以下主题交流：法务合规、公共政策、社区项目、产品治理、跨文化沟通等。可远程或在温尼伯本地面谈。</p>
+          <ul class="list">
+            <li>📧 邮箱：<a href="mailto:you@example.com">you@example.com</a></li>
+            <li>🔗 领英：<a href="#" target="_blank" rel="noopener">linkedin.com/in/您的ID</a></li>
+            <li>📍 地点：Winnipeg, MB</li>
+          </ul>
+        </div>
+        <div>
+          <a class="btn primary" href="mailto:you@example.com">发送邮件</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="y"></span> 您的姓名. 由 GitHub Pages 提供托管。
+    </footer>
+  </main>
+
+  <script>
+    // 年份自动更新
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // 主题切换：保留到 localStorage
+    const modeBtn = document.getElementById('mode');
+    const key = 'site-theme';
+    const apply = t => document.documentElement.dataset.theme = t;
+    const saved = localStorage.getItem(key);
+    if (saved) apply(saved);
+    modeBtn.addEventListener('click', () => {
+      const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      const next = cur === 'dark' ? 'light' : 'dark';
+      apply(next); localStorage.setItem(key, next);
+    });
+  </script>
+  <style>
+    /* data-theme 辅助（可选） */
+    :root[data-theme="light"] { color-scheme: light; }
+    :root[data-theme="dark"] { color-scheme: dark; }
+  </style>
+</body>
+</html>
